@@ -11,6 +11,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 5000
+# Install Apache and mod_wsgi
+RUN apt-get update && apt-get install -y apache2 libapache2-mod-wsgi-py3
 
-CMD ["python", "app.py"]
+# Enable mod_wsgi
+RUN a2enmod wsgi
+
+# Copy Apache configuration
+COPY apache.conf /etc/apache2/sites-available/000-default.conf
+
+EXPOSE 80
+
+CMD service apache2 start && python app.py
