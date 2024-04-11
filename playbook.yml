@@ -1,0 +1,14 @@
+- hosts: test-server
+  become: true
+  tasks:
+  - name: update apt
+    command: sudo apt-get update
+
+  - name: install docker
+    command: sudo apt install -y docker.io
+
+  - name: start docker service
+    command: sudo systemctl start docker
+
+  - name: deploy todo application
+    command: sudo docker run -itd -p 5000:5000 chandanteekinavar/todo-app_python:1.0
