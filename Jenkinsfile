@@ -16,6 +16,10 @@ node{
          }
          
      }
+     
+     stage('Deploy'){
+         ansiblePlaybook become: true, credentialsId: 'ansible-ssh-jenkins-key', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'playbook.yml', vaultTmpPath: ''
+     }
     
     
     
